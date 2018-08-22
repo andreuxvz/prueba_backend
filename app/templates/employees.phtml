@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>Slim 3</title>
+    <link href='//fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    
+    <style>
+      body {
+        margin: 50px 0 0 0;
+        padding: 0;
+        width: 100%;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        text-align: center;
+        color: #aaa;
+        font-size: 18px;
+      }
+      
+      h1 {
+        color: #719e40;
+        letter-spacing: -3px;
+        font-family: 'Lato', sans-serif;
+        font-size: 100px;
+        font-weight: 200;
+        margin-bottom: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <?php if($vista == 'todos'): ?>
+        <h2>Empleados</h2>
+        <form action="empleados">
+          <div class="form-group col-sm-4">
+            <label>Ingrese el correo electronico</label>
+            <input type="text" name="email" class="form-control" value="<?= $email; ?>">
+          </div>
+          <div class="form-group col-sm-2" style="margin-top: 20px">
+            <button class="btn btn-primary">Buscar</button>
+          </div>
+          
+        </form>
+      <?php else: ?>
+        <h2>Empleado</h2>
+        <a href="/empleados" class="btn btn-primary">Regresar</a>
+      <?php endif; ?>
+      <br>
+
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+              <th style="text-align: center">name</th>
+              <th style="text-align: center">email</th>
+              <th style="text-align: center">position</th>
+              <th  style="text-align: center">salary</th>
+            <?php if($vista == 'solo'): ?>
+              <th style="text-align: center">isOnline</th>
+              <th style="text-align: center">gender</th>
+              <th style="text-align: center">email</th>
+              <th style="text-align: center">phone</th>
+              <th style="text-align: center">address</th>
+              <th style="text-align: center">skills</th>
+            <?php else: ?>
+              <th></th>
+            <?php endif; ?>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach($employees as $employee): ?>
+            <tr>
+                <td><?= $employee['id']; ?></td>
+                <td><?= $employee['email']; ?></td>
+                <td><?= $employee['position']; ?></td>
+                <td><?= $employee['salary']; ?></td>
+              <?php if($vista == 'solo'): ?>
+                <td><?php if($employee['isOnline']) { echo 'online'; } else { echo 'offline';}  ?></td>
+                <td><?= $employee['gender']; ?></td>
+                <td><?= $employee['email']; ?></td>
+                <td><?= $employee['phone']; ?></td>
+                <td><?= $employee['address']; ?></td>
+                <td><?= $employee['str_skills']; ?></td>
+              <?php else: ?>
+                <td><a href="/empleados/<?=$employee['id']; ?>" class="btn btn-primary">ver</a></td>
+              <?php endif; ?>
+            </tr>
+          <?php endforeach; ?>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
